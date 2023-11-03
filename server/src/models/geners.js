@@ -1,20 +1,18 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../../db/config");
-const Genres = sequelize.define(
-  "Genres",
-  {
-    // Model attributes are defined here
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
+module.exports = (sequelize, DataTypes) => {
+  const Genres = sequelize.define(
+    "Genres",
+    {
+      // Model attributes are defined here
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
     },
-  },
-  {
-    tableName: "Genres",
-    timestamps: false,
-  }
-);
-
-// `sequelize.define` also returns the model
-console.log(Genres === sequelize.models.Genres); // true
-module.exports = Genres;
+    {
+      tableName: "Genres",
+      timestamps: false,
+    }
+  );
+  return Genres;
+};

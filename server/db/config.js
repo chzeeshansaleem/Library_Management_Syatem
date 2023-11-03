@@ -1,5 +1,5 @@
-const { Sequelize } = require("sequelize");
-
+const { Sequelize, DataTypes } = require("sequelize");
+const { v4: uuidv4 } = require("uuid");
 const sequelize = new Sequelize("library", "postgres", "admin", {
   host: "localhost",
   dialect: "postgres",
@@ -10,4 +10,11 @@ try {
 } catch (error) {
   console.error("Unable to connect to the database:", error);
 }
-module.exports = sequelize;
+const db = {};
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+db.geners = require("../src/models/geners")(sequelize, DataTypes);
+db.publishers = require("../src/models/publishers")(sequelize, DataTypes);
+//db.authors = require("../src/models/authors")(sequelize, DataTypes);
+db.sequelize.sync({ alter: true });
+module.exports = db;
